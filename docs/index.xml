@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tracks</title>
-    <link>https://example.org/index.xml</link>
+    <link>https://r-tutor.github.io/tracks/index.xml</link>
     <description>Recent content on Tracks</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2016 Your name or company</copyright>
     <lastBuildDate>Sat, 05 Nov 2016 19:41:01 +0530</lastBuildDate>
-    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://r-tutor.github.io/tracks/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>This is a Standard Post</title>
-      <link>https://example.org/post/work2/</link>
+      <link>https://r-tutor.github.io/tracks/post/work2/</link>
       <pubDate>Sat, 05 Nov 2016 19:41:01 +0530</pubDate>
       
-      <guid>https://example.org/post/work2/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work2/</guid>
       <description>&lt;p&gt;This is what an ordinary post looks like, and you’re reading a custom excerpt right now. Have fun looking around the theme, and don’t forget to check it out on your phone!
 &lt;/p&gt;
 
@@ -50,10 +50,10 @@
     
     <item>
       <title>Another Awesome Post</title>
-      <link>https://example.org/post/work3/</link>
+      <link>https://r-tutor.github.io/tracks/post/work3/</link>
       <pubDate>Sat, 05 Nov 2016 19:44:32 +0530</pubDate>
       
-      <guid>https://example.org/post/work3/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work3/</guid>
       <description>&lt;p&gt;Fifth abundantly made Give sixth hath. Cattle creature i be don&amp;rsquo;t them.
 &lt;/p&gt;
 
@@ -86,10 +86,10 @@
     
     <item>
       <title>A post without an Image</title>
-      <link>https://example.org/post/work4/</link>
+      <link>https://r-tutor.github.io/tracks/post/work4/</link>
       <pubDate>Sat, 05 Nov 2016 19:50:47 +0530</pubDate>
       
-      <guid>https://example.org/post/work4/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work4/</guid>
       <description>&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
 &lt;/p&gt;
 
@@ -122,10 +122,10 @@
     
     <item>
       <title>A Totally Response Theme</title>
-      <link>https://example.org/post/work5/</link>
+      <link>https://r-tutor.github.io/tracks/post/work5/</link>
       <pubDate>Sat, 05 Nov 2016 19:53:42 +0530</pubDate>
       
-      <guid>https://example.org/post/work5/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work5/</guid>
       <description>&lt;p&gt;Fifth abundantly made Give sixth hath. Cattle creature i be don&amp;rsquo;t them.
 &lt;/p&gt;
 
@@ -158,10 +158,10 @@
     
     <item>
       <title>Post with a Gallery</title>
-      <link>https://example.org/post/work7/</link>
+      <link>https://r-tutor.github.io/tracks/post/work7/</link>
       <pubDate>Sat, 05 Nov 2016 19:57:40 +0530</pubDate>
       
-      <guid>https://example.org/post/work7/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work7/</guid>
       <description>&lt;p&gt;Fifth abundantly made Give sixth hath. Cattle creature i be don&amp;rsquo;t them.
 &lt;/p&gt;
 
@@ -194,10 +194,10 @@
     
     <item>
       <title>A Post with lot of comments</title>
-      <link>https://example.org/post/work8/</link>
+      <link>https://r-tutor.github.io/tracks/post/work8/</link>
       <pubDate>Sat, 05 Nov 2016 19:59:22 +0530</pubDate>
       
-      <guid>https://example.org/post/work8/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work8/</guid>
       <description>&lt;p&gt;Fifth abundantly made Give sixth hath. Cattle creature i be don&amp;rsquo;t them.
 &lt;/p&gt;
 
@@ -230,10 +230,10 @@
     
     <item>
       <title>Blogging is Fun and Worthwhile</title>
-      <link>https://example.org/post/work9/</link>
+      <link>https://r-tutor.github.io/tracks/post/work9/</link>
       <pubDate>Sat, 05 Nov 2016 20:02:19 +0530</pubDate>
       
-      <guid>https://example.org/post/work9/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work9/</guid>
       <description>&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
 &lt;/p&gt;
 
@@ -266,10 +266,10 @@
     
     <item>
       <title>Item with image</title>
-      <link>https://example.org/post/work10/</link>
+      <link>https://r-tutor.github.io/tracks/post/work10/</link>
       <pubDate>Sat, 05 Nov 2016 20:22:08 +0530</pubDate>
       
-      <guid>https://example.org/post/work10/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work10/</guid>
       <description>&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
 &lt;/p&gt;
 
@@ -302,10 +302,10 @@
     
     <item>
       <title>Item with image</title>
-      <link>https://example.org/post/work11/</link>
+      <link>https://r-tutor.github.io/tracks/post/work11/</link>
       <pubDate>Sat, 05 Nov 2016 20:23:59 +0530</pubDate>
       
-      <guid>https://example.org/post/work11/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work11/</guid>
       <description>&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
 &lt;/p&gt;
 
@@ -338,10 +338,10 @@
     
     <item>
       <title>Get in touch</title>
-      <link>https://example.org/contact/</link>
+      <link>https://r-tutor.github.io/tracks/contact/</link>
       <pubDate>Sun, 06 Nov 2016 13:00:25 +0530</pubDate>
       
-      <guid>https://example.org/contact/</guid>
+      <guid>https://r-tutor.github.io/tracks/contact/</guid>
       <description>&lt;p&gt;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then&lt;/p&gt;
 
 &lt;p&gt;Effects present letters inquiry no an removed or friends. Desire behind latter me though in. Supposing shameless am he engrossed up additions. My possible peculiar together to. Desire so better am cannot he up before points. Remember mistaken opinions it pleasure of debating. Court front maids forty if aware their at. Chicken use are pressed removed.&lt;/p&gt;
@@ -352,17 +352,17 @@
     
     <item>
       <title>About me</title>
-      <link>https://example.org/about/</link>
+      <link>https://r-tutor.github.io/tracks/about/</link>
       <pubDate>Sat, 05 Nov 2016 21:05:33 +0530</pubDate>
       
-      <guid>https://example.org/about/</guid>
+      <guid>https://r-tutor.github.io/tracks/about/</guid>
       <description>
 
 &lt;p&gt;An sincerity so extremity he additions. Her yet &lt;strong&gt;there truth merit&lt;/strong&gt;. Mrs all projecting favourable now unpleasing. Son law garden chatty temper. Oh children provided to mr elegance marriage strongly. Off can admiration prosperous now devonshire diminution law.&lt;/p&gt;
 
 &lt;p&gt;Received overcame oh sensible so at an. Formed do change merely to county it. &lt;strong&gt;Am separate contempt&lt;/strong&gt; domestic to to oh. On relation my so addition branched. Put hearing cottage she norland letters equally prepare too. Replied exposed savings he no viewing as up. Soon body add him hill. No father living really people estate if. Mistake do produce beloved demesne if am pursuit.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://example.org/img/about.jpg&#34; alt=&#34;This is me&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://r-tutor.github.io/tracks/img/about.jpg&#34; alt=&#34;This is me&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn&amp;rsquo;t listen. She packed her seven versalia, put her initial into the belt and made herself on the way.&lt;/p&gt;
 
@@ -379,10 +379,10 @@
     
     <item>
       <title>Name of the work 1</title>
-      <link>https://example.org/post/work1/</link>
+      <link>https://r-tutor.github.io/tracks/post/work1/</link>
       <pubDate>Sat, 05 Nov 2016 18:25:22 +0530</pubDate>
       
-      <guid>https://example.org/post/work1/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/work1/</guid>
       <description>&lt;p&gt;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life. One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
 &lt;/p&gt;
 
@@ -415,10 +415,10 @@
     
     <item>
       <title>Hello R Markdown</title>
-      <link>https://example.org/post/2015-07-23-r-rmarkdown/</link>
+      <link>https://r-tutor.github.io/tracks/post/2015-07-23-r-rmarkdown/</link>
       <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
       
-      <guid>https://example.org/post/2015-07-23-r-rmarkdown/</guid>
+      <guid>https://r-tutor.github.io/tracks/post/2015-07-23-r-rmarkdown/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
@@ -456,7 +456,7 @@ pie(
   init.angle = -50, border = NA
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:pie&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;https://example.org/post/2015-07-23-r-rmarkdown/figures/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
+&lt;img src=&#34;https://r-tutor.github.io/tracks/post/2015-07-23-r-rmarkdown/figures/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 1: A fancy pie chart.
 &lt;/p&gt;
