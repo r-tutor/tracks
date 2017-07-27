@@ -1,4 +1,4 @@
-baseurl = "https://example.org/"
+baseurl = "https://r-tutor.github.io/tracks/"
 title = "Tracks"
 theme = "hugo-tracks-theme"
 publishDir = "docs"
