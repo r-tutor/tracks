@@ -1,0 +1,341 @@
+---
+title: 'Dealing with Dates'
+image: "img/portfolio/birds.jpg"
+date: "2017-08-04"
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+```{r setup, eval=F, echo=F}
+source(file.path(rprojroot::find_rstudio_root_file(),'resources','setup.R'))
+```
+
+Real world data are often associated with dates and time; however, dealing with dates accurately can appear to be a complicated task due to the variety in formats and accounting for time-zone differences and leap years.  R has a range of functions that allow you to work with dates and times.  Furthermore, packages such as [`lubridate`](https://cran.r-project.org/web/packages/lubridate/index.html) make it easier to work with dates and times.
+
+This section introduces the basics of dealing with dates.  This includes:
+
+- [Getting current date & time](#current_date_time)
+- [Converting strings to dates](#convert_date)
+- [Extract & manipulate parts of dates](#extract_manipulate_dates)
+- [Creating date sequences](#date_sequences)
+- [Calculations with dates](#date_calculations)
+- [Dealing with time zones & daylight savings](#time_zones)
+- [Additional resources](#date_resources)
+
+
+### Getting current date & time {#current_date_time}
+
+To get current date and time information:
+
+
+```{r}
+Sys.timezone()
+
+Sys.Date()
+
+Sys.time()
+```
+
+If using the `lubridate` package:
+
+```{r}
+library(lubridate)
+
+now()
+```
+
+### Converting strings to dates {#convert_date}
+
+When date and time data are imported into R they will often default to a character string.  This requires us to [convert strings to dates](#date_convert_strings).  We may also have multiple strings that we want to [merge to create a date variable](#date_merge_strings).  
+
+
+### Convert Strings to Dates {#date_convert_strings}
+To convert a string that is already in a date format (YYYY-MM-DD) into a date object use `as.Date()`:
+
+```{r}
+x <- c("2015-07-01", "2015-08-01", "2015-09-01")
+
+as.Date(x)
+```
+
+Note that the default date format is YYYY-MM-DD; therefore, if your string is of different format you must incorporate the `format` argument.  There are multiple formats that dates can be in; for a complete list of formatting code options in R type `?strftime` in your console.
+
+
+```{r}
+y <- c("07/01/2015", "07/01/2015", "07/01/2015")
+
+as.Date(y, format = "%m/%d/%Y")
+```
+
+If using the `lubridate` package:
+
+```{r}
+library(lubridate)
+ymd(x)
+
+mdy(y)
+```
+
+One of the many benefits of the `lubridate` package is that it automatically recognizes the common separators used when recording dates ("-", "/", ".", and "").  As a result, you only need to focus on specifying the order of the date elements to determine the parsing function applied:
+
+```{r, echo=FALSE}
+order <- c('year, month, day',
+           'year, day, month',
+           'month, day, year',
+           'day, month, year',
+           'hour, minute',
+           'hour, minute, second',
+           'year, month, day, hour, minute, second')
+parse <- c('`ymd()`','`ydm()`','`mdy()`',
+           '`dmy()`', '`hm()`','`hms()`',
+           '`ymd_hms()`')
+lub_parse <-  data.frame(order,parse)
+colnames(lub_parse) <- c('Order of elements in date-time','Parse function')
+knitr::kable(lub_parse, caption = 'Lubridate Parsing Functions (adapted from _Dates and Times Made Easy with Lubridate_, Grolemund & Wickham 2011 ')
+```
+
+### Create Dates by Merging Data {#date_merge_strings}
+
+Sometimes your date data are collected in separate elements.  To convert these separate data into one date object incorporate the `ISOdate()` function:
+
+```{r}
+yr <- c("2012", "2013", "2014", "2015")
+mo <- c("1", "5", "7", "2")
+day <- c("02", "22", "15", "28")
+
+# ISOdate converts to a POSIXct object
+ISOdate(year = yr, month = mo, day = day)
+
+# truncate the unused time data by converting with as.Date
+as.Date(ISOdate(year = yr, month = mo, day = day))
+```
+
+Note that `ISODate()` also has arguments to accept data for hours, minutes, seconds, and time-zone if you need to merge all these separate components.
+
+### Extract & manipulate parts of dates {#extract_manipulate_dates}
+
+To extract and manipulate individual elements of a date I typically use the `lubridate` package due to its simplistic function syntax.  The functions provided by `lubridate` to perform extraction and manipulation of dates include:
+
+```{r, echo=FALSE}
+`Date Component` <- c('Year','Month','Week', 'Day of year',
+                      'Day of month', 'Day of week','Hour',
+                      'Minute', 'Second', 'Time zone')
+Accessor <- c('`year()`','`month()`','`week()`', '`yday()`', 
+              '`mday()`','`wday()`', '`hour()`','`minute()`',
+              '`second()`','`tz()`')
+
+lub_access <-  data.frame(`Date Component`,Accessor)
+colnames(lub_access) <- c('Order of elements in date-time','Parse function')
+knitr::kable(lub_parse, caption = 'lubridate Accessor Functions (adapted from _Dates and Times Made Easy with Lubridate_, Grolemund & Wickham 2011 ')
+```
+
+To extract an individual element of the date variable you simply use the accessor function desired.  Note that the accessor variables have additional arguments that can be used to show the name of the date element in full or abbreviated form.
+
+
+```{r}
+library(lubridate)
+
+x <- c("2015-07-01", "2015-08-01", "2015-09-01")
+
+year(x)
+## [1] 2015 2015 2015
+
+# default is numerical value
+month(x)
+## [1] 7 8 9
+
+# show abbreviated name
+month(x, label = TRUE)
+
+# show unabbreviated name
+month(x, label = TRUE, abbr = FALSE)
+
+
+wday(x, label = TRUE, abbr = FALSE)
+```
+
+To manipulate or change the values of date elements we simply use the accessor function to extract the element of choice and then use the assignment function to assign a new value.
+
+
+```{r}
+# convert to date format
+x <- ymd(x)
+x
+
+# change the days for the dates
+mday(x)
+
+mday(x) <- c(3, 10, 22)
+x
+
+# can also use 'update()' function
+update(x, year = c(2013, 2014, 2015), month = 9)
+
+# can also add/subtract units
+x + years(1) - days(c(2, 9, 21))
+```
+
+<br>
+
+## Creating date sequences {#date_sequences}
+To create a sequence of dates we can leverage the [`seq()`](#seq) function. As with numeric vectors, you have to specify at least three of the four arguments (`from`, `to`, `by`, and `length.out`).  
+
+
+```{r}
+seq(as.Date("2010-1-1"), as.Date("2015-1-1"), by = "years")
+
+seq(as.Date("2015/1/1"), as.Date("2015/12/30"), by = "quarter")
+
+seq(as.Date('2015-09-15'), as.Date('2015-09-30'), by = "2 days")
+```
+
+Using the `lubridate` package is very similar.  The only difference is `lubridate` changes the way you specify the first two arguments in the `seq()` function.
+
+
+```{r}
+library(lubridate)
+
+seq(ymd("2010-1-1"), ymd("2015-1-1"), by = "years")
+
+seq(ymd("2015/1/1"), ymd("2015/12/30"), by = "quarter")
+
+seq(ymd('2015-09-15'), ymd('2015-09-30'), by = "2 days")
+```
+
+Creating sequences with time is very similar; however, we need to make sure our date object is POSIXct rather than just a Date object (as produced by `as.Date`):
+
+
+```{r}
+seq(as.POSIXct("2015-1-1 0:00"), as.POSIXct("2015-1-1 12:00"), by = "hour")
+
+# with lubridate
+seq(ymd_hm("2015-1-1 0:00"), ymd_hm("2015-1-1 12:00"), by = "hour")
+```
+
+<br>
+
+## Calculations with dates {#date_calculations}
+Since R stores date and time objects as numbers, this allows you to perform various calculations such as logical comparisons, addition, subtraction, and working with durations.
+
+
+
+```{r}
+x <- Sys.Date()
+x
+
+y <- as.Date("2015-09-11")
+
+x > y
+
+x - y
+```
+
+The nice thing about the date/time classes is that they keep track of leap years, leap seconds, daylight savings, and time zones.  Use `OlsonNames()` for a full list of acceptable time zone specifications.
+
+```{r}
+# last leap year
+x <- as.Date("2012-03-1")
+y <- as.Date("2012-02-28")
+
+x - y
+
+# example with time zones
+x <- as.POSIXct("2015-09-22 01:00:00", tz = "US/Eastern")
+y <- as.POSIXct("2015-09-22 01:00:00", tz = "US/Pacific")
+
+y == x
+
+y - x
+```
+
+Similarly, the same functionality exists with the `lubridate` package with the only difference being the accessor function(s) used.
+
+
+```{r}
+library(lubridate)
+
+x <- now()
+x
+
+y <- ymd("2015-09-11")
+
+x > y
+
+x - y
+
+y + days(4)
+
+x - hours(4)
+```
+
+We can also deal with time spans by using the duration functions in `lubridate`.  Durations simply measure the time span between start and end dates. Using base R date functions for duration calculations is tedious and often results in wrong measurements.  `lubridate` provides simplistic syntax to calculate durations with the desired measurement (seconds, minutes, hours, etc.).
+
+
+```{r}
+# create new duration (represented in seconds)
+new_duration(60)
+
+# create durations for minutes, hours, years
+dminutes(1)
+
+dhours(1)
+
+dyears(1)
+
+# add/subtract durations from date/time object
+x <- ymd_hms("2015-09-22 12:00:00")
+
+x + dhours(10)
+
+x + dhours(10) + dminutes(33) + dseconds(54)
+```
+
+<br>
+
+## Dealing with time zones & daylight savings {#time_zones}
+To change the time zone for a date/time we can use the `with_tz()` function which will also update the clock time to align with the updated time zone:
+
+
+```{r}
+library(lubridate)
+
+time <- now()
+time
+
+with_tz(time, tzone = "MST")
+```
+
+If the time zone is incorrect or for some reason you need to change the time zone without changing the clock time you can force it with `force_tz()`:
+
+
+```{r}
+time
+
+force_tz(time, tzone = "MST")
+```
+
+We can also easily work with daylight savings times to eliminate impacts on date/time calculations:
+
+
+```{r}
+# most recent daylight savings time
+ds <- ymd_hms("2015-03-08 01:59:59", tz = "US/Eastern")
+
+# if we add a duration of 1 sec we gain an extra hour
+ds + dseconds(1)
+
+# add a duration of 2 hours will reflect actual daylight savings clock time 
+# that occured 2 hours after 01:59:59 on 2015-03-08
+ds + dhours(2)
+
+# add a period of two hours will reflect clock time that normally occurs after
+# 01:59:59 and is not influenced by daylight savings time.
+ds + hours(2)
+```
+
+### Additional resources {#date_resources}
+
+For additional resources on learning and dealing with dates I recommend the following:
+
+* [Dates and times made easy with `lubridate`](http://www.jstatsoft.org/article/view/v040i03)
+* [Date and time classes in R](https://www.r-project.org/doc/Rnews/Rnews_2004-1.pdf)
