@@ -1,0 +1,365 @@
+---
+title: 'Dealing with Dates'
+image: "img/portfolio/birds.jpg"
+date: "2017-08-04"
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+
+<!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE -->
+
+<p>Real world data are often associated with dates and time; however, dealing with dates accurately can appear to be a complicated task due to the variety in formats and accounting for time-zone differences and leap years. R has a range of functions that allow you to work with dates and times. Furthermore, packages such as <a href="https://cran.r-project.org/web/packages/lubridate/index.html"><code>lubridate</code></a> make it easier to work with dates and times.</p>
+<p>This section introduces the basics of dealing with dates. This includes:</p>
+<ul>
+<li><a href="#current_date_time">Getting current date &amp; time</a></li>
+<li><a href="#convert_date">Converting strings to dates</a></li>
+<li><a href="#extract_manipulate_dates">Extract &amp; manipulate parts of dates</a></li>
+<li><a href="#date_sequences">Creating date sequences</a></li>
+<li><a href="#date_calculations">Calculations with dates</a></li>
+<li><a href="#time_zones">Dealing with time zones &amp; daylight savings</a></li>
+<li><a href="#date_resources">Additional resources</a></li>
+</ul>
+<div id="current_date_time" class="section level3">
+<h3>Getting current date &amp; time</h3>
+<p>To get current date and time information:</p>
+<pre class="r"><code>Sys.timezone()</code></pre>
+<pre><code>## [1] &quot;America/New_York&quot;</code></pre>
+<pre class="r"><code>Sys.Date()</code></pre>
+<pre><code>## [1] &quot;2017-08-04&quot;</code></pre>
+<pre class="r"><code>Sys.time()</code></pre>
+<pre><code>## [1] &quot;2017-08-04 12:35:49 EDT&quot;</code></pre>
+<p>If using the <code>lubridate</code> package:</p>
+<pre class="r"><code>library(lubridate)</code></pre>
+<pre><code>## Loading required package: methods</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
+<pre class="r"><code>now()</code></pre>
+<pre><code>## [1] &quot;2017-08-04 12:35:49 EDT&quot;</code></pre>
+</div>
+<div id="convert_date" class="section level3">
+<h3>Converting strings to dates</h3>
+<p>When date and time data are imported into R they will often default to a character string. This requires us to <a href="#date_convert_strings">convert strings to dates</a>. We may also have multiple strings that we want to <a href="#date_merge_strings">merge to create a date variable</a>.</p>
+</div>
+<div id="date_convert_strings" class="section level3">
+<h3>Convert Strings to Dates</h3>
+<p>To convert a string that is already in a date format (YYYY-MM-DD) into a date object use <code>as.Date()</code>:</p>
+<pre class="r"><code>x &lt;- c(&quot;2015-07-01&quot;, &quot;2015-08-01&quot;, &quot;2015-09-01&quot;)
+
+as.Date(x)</code></pre>
+<pre><code>## [1] &quot;2015-07-01&quot; &quot;2015-08-01&quot; &quot;2015-09-01&quot;</code></pre>
+<p>Note that the default date format is YYYY-MM-DD; therefore, if your string is of different format you must incorporate the <code>format</code> argument. There are multiple formats that dates can be in; for a complete list of formatting code options in R type <code>?strftime</code> in your console.</p>
+<pre class="r"><code>y &lt;- c(&quot;07/01/2015&quot;, &quot;07/01/2015&quot;, &quot;07/01/2015&quot;)
+
+as.Date(y, format = &quot;%m/%d/%Y&quot;)</code></pre>
+<pre><code>## [1] &quot;2015-07-01&quot; &quot;2015-07-01&quot; &quot;2015-07-01&quot;</code></pre>
+<p>If using the <code>lubridate</code> package:</p>
+<pre class="r"><code>library(lubridate)
+ymd(x)</code></pre>
+<pre><code>## [1] &quot;2015-07-01&quot; &quot;2015-08-01&quot; &quot;2015-09-01&quot;</code></pre>
+<pre class="r"><code>mdy(y)</code></pre>
+<pre><code>## [1] &quot;2015-07-01&quot; &quot;2015-07-01&quot; &quot;2015-07-01&quot;</code></pre>
+<p>One of the many benefits of the <code>lubridate</code> package is that it automatically recognizes the common separators used when recording dates (“-”, “/”, “.”, and “”). As a result, you only need to focus on specifying the order of the date elements to determine the parsing function applied:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-6">Table 1: </span>Lubridate Parsing Functions (adapted from <em>Dates and Times Made Easy with Lubridate</em>, Grolemund &amp; Wickham 2011</caption>
+<thead>
+<tr class="header">
+<th align="left">Order of elements in date-time</th>
+<th align="left">Parse function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">year, month, day</td>
+<td align="left"><code>ymd()</code></td>
+</tr>
+<tr class="even">
+<td align="left">year, day, month</td>
+<td align="left"><code>ydm()</code></td>
+</tr>
+<tr class="odd">
+<td align="left">month, day, year</td>
+<td align="left"><code>mdy()</code></td>
+</tr>
+<tr class="even">
+<td align="left">day, month, year</td>
+<td align="left"><code>dmy()</code></td>
+</tr>
+<tr class="odd">
+<td align="left">hour, minute</td>
+<td align="left"><code>hm()</code></td>
+</tr>
+<tr class="even">
+<td align="left">hour, minute, second</td>
+<td align="left"><code>hms()</code></td>
+</tr>
+<tr class="odd">
+<td align="left">year, month, day, hour, minute, second</td>
+<td align="left"><code>ymd_hms()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="date_merge_strings" class="section level3">
+<h3>Create Dates by Merging Data</h3>
+<p>Sometimes your date data are collected in separate elements. To convert these separate data into one date object incorporate the <code>ISOdate()</code> function:</p>
+<pre class="r"><code>yr &lt;- c(&quot;2012&quot;, &quot;2013&quot;, &quot;2014&quot;, &quot;2015&quot;)
+mo &lt;- c(&quot;1&quot;, &quot;5&quot;, &quot;7&quot;, &quot;2&quot;)
+day &lt;- c(&quot;02&quot;, &quot;22&quot;, &quot;15&quot;, &quot;28&quot;)
+
+# ISOdate converts to a POSIXct object
+ISOdate(year = yr, month = mo, day = day)</code></pre>
+<pre><code>## [1] &quot;2012-01-02 12:00:00 GMT&quot; &quot;2013-05-22 12:00:00 GMT&quot;
+## [3] &quot;2014-07-15 12:00:00 GMT&quot; &quot;2015-02-28 12:00:00 GMT&quot;</code></pre>
+<pre class="r"><code># truncate the unused time data by converting with as.Date
+as.Date(ISOdate(year = yr, month = mo, day = day))</code></pre>
+<pre><code>## [1] &quot;2012-01-02&quot; &quot;2013-05-22&quot; &quot;2014-07-15&quot; &quot;2015-02-28&quot;</code></pre>
+<p>Note that <code>ISODate()</code> also has arguments to accept data for hours, minutes, seconds, and time-zone if you need to merge all these separate components.</p>
+</div>
+<div id="extract_manipulate_dates" class="section level3">
+<h3>Extract &amp; manipulate parts of dates</h3>
+<p>To extract and manipulate individual elements of a date I typically use the <code>lubridate</code> package due to its simplistic function syntax. The functions provided by <code>lubridate</code> to perform extraction and manipulation of dates include:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-8">Table 2: </span>lubridate Accessor Functions (adapted from <em>Dates and Times Made Easy with Lubridate</em>, Grolemund &amp; Wickham 2011</caption>
+<thead>
+<tr class="header">
+<th align="left">Order of elements in date-time</th>
+<th align="left">Parse function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">year, month, day</td>
+<td align="left"><code>ymd()</code></td>
+</tr>
+<tr class="even">
+<td align="left">year, day, month</td>
+<td align="left"><code>ydm()</code></td>
+</tr>
+<tr class="odd">
+<td align="left">month, day, year</td>
+<td align="left"><code>mdy()</code></td>
+</tr>
+<tr class="even">
+<td align="left">day, month, year</td>
+<td align="left"><code>dmy()</code></td>
+</tr>
+<tr class="odd">
+<td align="left">hour, minute</td>
+<td align="left"><code>hm()</code></td>
+</tr>
+<tr class="even">
+<td align="left">hour, minute, second</td>
+<td align="left"><code>hms()</code></td>
+</tr>
+<tr class="odd">
+<td align="left">year, month, day, hour, minute, second</td>
+<td align="left"><code>ymd_hms()</code></td>
+</tr>
+</tbody>
+</table>
+<p>To extract an individual element of the date variable you simply use the accessor function desired. Note that the accessor variables have additional arguments that can be used to show the name of the date element in full or abbreviated form.</p>
+<pre class="r"><code>library(lubridate)
+
+x &lt;- c(&quot;2015-07-01&quot;, &quot;2015-08-01&quot;, &quot;2015-09-01&quot;)
+
+year(x)</code></pre>
+<pre><code>## [1] 2015 2015 2015</code></pre>
+<pre class="r"><code>## [1] 2015 2015 2015
+
+# default is numerical value
+month(x)</code></pre>
+<pre><code>## [1] 7 8 9</code></pre>
+<pre class="r"><code>## [1] 7 8 9
+
+# show abbreviated name
+month(x, label = TRUE)</code></pre>
+<pre><code>## [1] Jul Aug Sep
+## 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec</code></pre>
+<pre class="r"><code># show unabbreviated name
+month(x, label = TRUE, abbr = FALSE)</code></pre>
+<pre><code>## [1] July      August    September
+## 12 Levels: January &lt; February &lt; March &lt; April &lt; May &lt; June &lt; ... &lt; December</code></pre>
+<pre class="r"><code>wday(x, label = TRUE, abbr = FALSE)</code></pre>
+<pre><code>## [1] Wednesday Saturday  Tuesday  
+## 7 Levels: Sunday &lt; Monday &lt; Tuesday &lt; Wednesday &lt; Thursday &lt; ... &lt; Saturday</code></pre>
+<p>To manipulate or change the values of date elements we simply use the accessor function to extract the element of choice and then use the assignment function to assign a new value.</p>
+<pre class="r"><code># convert to date format
+x &lt;- ymd(x)
+x</code></pre>
+<pre><code>## [1] &quot;2015-07-01&quot; &quot;2015-08-01&quot; &quot;2015-09-01&quot;</code></pre>
+<pre class="r"><code># change the days for the dates
+mday(x)</code></pre>
+<pre><code>## [1] 1 1 1</code></pre>
+<pre class="r"><code>mday(x) &lt;- c(3, 10, 22)
+x</code></pre>
+<pre><code>## [1] &quot;2015-07-03&quot; &quot;2015-08-10&quot; &quot;2015-09-22&quot;</code></pre>
+<pre class="r"><code># can also use &#39;update()&#39; function
+update(x, year = c(2013, 2014, 2015), month = 9)</code></pre>
+<pre><code>## [1] &quot;2013-09-03&quot; &quot;2014-09-10&quot; &quot;2015-09-22&quot;</code></pre>
+<pre class="r"><code># can also add/subtract units
+x + years(1) - days(c(2, 9, 21))</code></pre>
+<pre><code>## [1] &quot;2016-07-01&quot; &quot;2016-08-01&quot; &quot;2016-09-01&quot;</code></pre>
+<p><br></p>
+</div>
+<div id="date_sequences" class="section level2">
+<h2>Creating date sequences</h2>
+<p>To create a sequence of dates we can leverage the <a href="#seq"><code>seq()</code></a> function. As with numeric vectors, you have to specify at least three of the four arguments (<code>from</code>, <code>to</code>, <code>by</code>, and <code>length.out</code>).</p>
+<pre class="r"><code>seq(as.Date(&quot;2010-1-1&quot;), as.Date(&quot;2015-1-1&quot;), by = &quot;years&quot;)</code></pre>
+<pre><code>## [1] &quot;2010-01-01&quot; &quot;2011-01-01&quot; &quot;2012-01-01&quot; &quot;2013-01-01&quot; &quot;2014-01-01&quot;
+## [6] &quot;2015-01-01&quot;</code></pre>
+<pre class="r"><code>seq(as.Date(&quot;2015/1/1&quot;), as.Date(&quot;2015/12/30&quot;), by = &quot;quarter&quot;)</code></pre>
+<pre><code>## [1] &quot;2015-01-01&quot; &quot;2015-04-01&quot; &quot;2015-07-01&quot; &quot;2015-10-01&quot;</code></pre>
+<pre class="r"><code>seq(as.Date(&#39;2015-09-15&#39;), as.Date(&#39;2015-09-30&#39;), by = &quot;2 days&quot;)</code></pre>
+<pre><code>## [1] &quot;2015-09-15&quot; &quot;2015-09-17&quot; &quot;2015-09-19&quot; &quot;2015-09-21&quot; &quot;2015-09-23&quot;
+## [6] &quot;2015-09-25&quot; &quot;2015-09-27&quot; &quot;2015-09-29&quot;</code></pre>
+<p>Using the <code>lubridate</code> package is very similar. The only difference is <code>lubridate</code> changes the way you specify the first two arguments in the <code>seq()</code> function.</p>
+<pre class="r"><code>library(lubridate)
+
+seq(ymd(&quot;2010-1-1&quot;), ymd(&quot;2015-1-1&quot;), by = &quot;years&quot;)</code></pre>
+<pre><code>## [1] &quot;2010-01-01&quot; &quot;2011-01-01&quot; &quot;2012-01-01&quot; &quot;2013-01-01&quot; &quot;2014-01-01&quot;
+## [6] &quot;2015-01-01&quot;</code></pre>
+<pre class="r"><code>seq(ymd(&quot;2015/1/1&quot;), ymd(&quot;2015/12/30&quot;), by = &quot;quarter&quot;)</code></pre>
+<pre><code>## [1] &quot;2015-01-01&quot; &quot;2015-04-01&quot; &quot;2015-07-01&quot; &quot;2015-10-01&quot;</code></pre>
+<pre class="r"><code>seq(ymd(&#39;2015-09-15&#39;), ymd(&#39;2015-09-30&#39;), by = &quot;2 days&quot;)</code></pre>
+<pre><code>## [1] &quot;2015-09-15&quot; &quot;2015-09-17&quot; &quot;2015-09-19&quot; &quot;2015-09-21&quot; &quot;2015-09-23&quot;
+## [6] &quot;2015-09-25&quot; &quot;2015-09-27&quot; &quot;2015-09-29&quot;</code></pre>
+<p>Creating sequences with time is very similar; however, we need to make sure our date object is POSIXct rather than just a Date object (as produced by <code>as.Date</code>):</p>
+<pre class="r"><code>seq(as.POSIXct(&quot;2015-1-1 0:00&quot;), as.POSIXct(&quot;2015-1-1 12:00&quot;), by = &quot;hour&quot;)</code></pre>
+<pre><code>##  [1] &quot;2015-01-01 00:00:00 EST&quot; &quot;2015-01-01 01:00:00 EST&quot;
+##  [3] &quot;2015-01-01 02:00:00 EST&quot; &quot;2015-01-01 03:00:00 EST&quot;
+##  [5] &quot;2015-01-01 04:00:00 EST&quot; &quot;2015-01-01 05:00:00 EST&quot;
+##  [7] &quot;2015-01-01 06:00:00 EST&quot; &quot;2015-01-01 07:00:00 EST&quot;
+##  [9] &quot;2015-01-01 08:00:00 EST&quot; &quot;2015-01-01 09:00:00 EST&quot;
+## [11] &quot;2015-01-01 10:00:00 EST&quot; &quot;2015-01-01 11:00:00 EST&quot;
+## [13] &quot;2015-01-01 12:00:00 EST&quot;</code></pre>
+<pre class="r"><code># with lubridate
+seq(ymd_hm(&quot;2015-1-1 0:00&quot;), ymd_hm(&quot;2015-1-1 12:00&quot;), by = &quot;hour&quot;)</code></pre>
+<pre><code>##  [1] &quot;2015-01-01 00:00:00 UTC&quot; &quot;2015-01-01 01:00:00 UTC&quot;
+##  [3] &quot;2015-01-01 02:00:00 UTC&quot; &quot;2015-01-01 03:00:00 UTC&quot;
+##  [5] &quot;2015-01-01 04:00:00 UTC&quot; &quot;2015-01-01 05:00:00 UTC&quot;
+##  [7] &quot;2015-01-01 06:00:00 UTC&quot; &quot;2015-01-01 07:00:00 UTC&quot;
+##  [9] &quot;2015-01-01 08:00:00 UTC&quot; &quot;2015-01-01 09:00:00 UTC&quot;
+## [11] &quot;2015-01-01 10:00:00 UTC&quot; &quot;2015-01-01 11:00:00 UTC&quot;
+## [13] &quot;2015-01-01 12:00:00 UTC&quot;</code></pre>
+<p><br></p>
+</div>
+<div id="date_calculations" class="section level2">
+<h2>Calculations with dates</h2>
+<p>Since R stores date and time objects as numbers, this allows you to perform various calculations such as logical comparisons, addition, subtraction, and working with durations.</p>
+<pre class="r"><code>x &lt;- Sys.Date()
+x</code></pre>
+<pre><code>## [1] &quot;2017-08-04&quot;</code></pre>
+<pre class="r"><code>y &lt;- as.Date(&quot;2015-09-11&quot;)
+
+x &gt; y</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>x - y</code></pre>
+<pre><code>## Time difference of 693 days</code></pre>
+<p>The nice thing about the date/time classes is that they keep track of leap years, leap seconds, daylight savings, and time zones. Use <code>OlsonNames()</code> for a full list of acceptable time zone specifications.</p>
+<pre class="r"><code># last leap year
+x &lt;- as.Date(&quot;2012-03-1&quot;)
+y &lt;- as.Date(&quot;2012-02-28&quot;)
+
+x - y</code></pre>
+<pre><code>## Time difference of 2 days</code></pre>
+<pre class="r"><code># example with time zones
+x &lt;- as.POSIXct(&quot;2015-09-22 01:00:00&quot;, tz = &quot;US/Eastern&quot;)
+y &lt;- as.POSIXct(&quot;2015-09-22 01:00:00&quot;, tz = &quot;US/Pacific&quot;)
+
+y == x</code></pre>
+<pre><code>## Warning in check_tzones(e1, e2): &#39;tzone&#39; attributes are inconsistent</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>y - x</code></pre>
+<pre><code>## Time difference of 3 hours</code></pre>
+<p>Similarly, the same functionality exists with the <code>lubridate</code> package with the only difference being the accessor function(s) used.</p>
+<pre class="r"><code>library(lubridate)
+
+x &lt;- now()
+x</code></pre>
+<pre><code>## [1] &quot;2017-08-04 12:35:50 EDT&quot;</code></pre>
+<pre class="r"><code>y &lt;- ymd(&quot;2015-09-11&quot;)
+
+x &gt; y</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>x - y</code></pre>
+<pre><code>## Warning: Incompatible methods (&quot;-.POSIXt&quot;, &quot;-.Date&quot;) for &quot;-&quot;</code></pre>
+<pre><code>## [1] &quot;2017-08-04 07:57:41 EDT&quot;</code></pre>
+<pre class="r"><code>y + days(4)</code></pre>
+<pre><code>## [1] &quot;2015-09-15&quot;</code></pre>
+<pre class="r"><code>x - hours(4)</code></pre>
+<pre><code>## [1] &quot;2017-08-04 08:35:50 EDT&quot;</code></pre>
+<p>We can also deal with time spans by using the duration functions in <code>lubridate</code>. Durations simply measure the time span between start and end dates. Using base R date functions for duration calculations is tedious and often results in wrong measurements. <code>lubridate</code> provides simplistic syntax to calculate durations with the desired measurement (seconds, minutes, hours, etc.).</p>
+<pre class="r"><code># create new duration (represented in seconds)
+new_duration(60)</code></pre>
+<pre><code>## Warning: &#39;new_duration&#39; is deprecated; use &#39;duration&#39; instead. Deprecated
+## in version &#39;1.5.0&#39;.</code></pre>
+<pre><code>## [1] &quot;60s (~1 minutes)&quot;</code></pre>
+<pre class="r"><code># create durations for minutes, hours, years
+dminutes(1)</code></pre>
+<pre><code>## [1] &quot;60s (~1 minutes)&quot;</code></pre>
+<pre class="r"><code>dhours(1)</code></pre>
+<pre><code>## [1] &quot;3600s (~1 hours)&quot;</code></pre>
+<pre class="r"><code>dyears(1)</code></pre>
+<pre><code>## [1] &quot;31536000s (~52.14 weeks)&quot;</code></pre>
+<pre class="r"><code># add/subtract durations from date/time object
+x &lt;- ymd_hms(&quot;2015-09-22 12:00:00&quot;)
+
+x + dhours(10)</code></pre>
+<pre><code>## [1] &quot;2015-09-22 22:00:00 UTC&quot;</code></pre>
+<pre class="r"><code>x + dhours(10) + dminutes(33) + dseconds(54)</code></pre>
+<pre><code>## [1] &quot;2015-09-22 22:33:54 UTC&quot;</code></pre>
+<p><br></p>
+</div>
+<div id="time_zones" class="section level2">
+<h2>Dealing with time zones &amp; daylight savings</h2>
+<p>To change the time zone for a date/time we can use the <code>with_tz()</code> function which will also update the clock time to align with the updated time zone:</p>
+<pre class="r"><code>library(lubridate)
+
+time &lt;- now()
+time</code></pre>
+<pre><code>## [1] &quot;2017-08-04 12:35:50 EDT&quot;</code></pre>
+<pre class="r"><code>with_tz(time, tzone = &quot;MST&quot;)</code></pre>
+<pre><code>## [1] &quot;2017-08-04 09:35:50 MST&quot;</code></pre>
+<p>If the time zone is incorrect or for some reason you need to change the time zone without changing the clock time you can force it with <code>force_tz()</code>:</p>
+<pre class="r"><code>time</code></pre>
+<pre><code>## [1] &quot;2017-08-04 12:35:50 EDT&quot;</code></pre>
+<pre class="r"><code>force_tz(time, tzone = &quot;MST&quot;)</code></pre>
+<pre><code>## [1] &quot;2017-08-04 12:35:50 MST&quot;</code></pre>
+<p>We can also easily work with daylight savings times to eliminate impacts on date/time calculations:</p>
+<pre class="r"><code># most recent daylight savings time
+ds &lt;- ymd_hms(&quot;2015-03-08 01:59:59&quot;, tz = &quot;US/Eastern&quot;)
+
+# if we add a duration of 1 sec we gain an extra hour
+ds + dseconds(1)</code></pre>
+<pre><code>## [1] &quot;2015-03-08 03:00:00 EDT&quot;</code></pre>
+<pre class="r"><code># add a duration of 2 hours will reflect actual daylight savings clock time 
+# that occured 2 hours after 01:59:59 on 2015-03-08
+ds + dhours(2)</code></pre>
+<pre><code>## [1] &quot;2015-03-08 04:59:59 EDT&quot;</code></pre>
+<pre class="r"><code># add a period of two hours will reflect clock time that normally occurs after
+# 01:59:59 and is not influenced by daylight savings time.
+ds + hours(2)</code></pre>
+<pre><code>## [1] &quot;2015-03-08 03:59:59 EDT&quot;</code></pre>
+<div id="date_resources" class="section level3">
+<h3>Additional resources</h3>
+<p>For additional resources on learning and dealing with dates I recommend the following:</p>
+<ul>
+<li><a href="http://www.jstatsoft.org/article/view/v040i03">Dates and times made easy with <code>lubridate</code></a></li>
+<li><a href="https://www.r-project.org/doc/Rnews/Rnews_2004-1.pdf">Date and time classes in R</a></li>
+</ul>
+</div>
+</div>
+
+
+<!-- BLOGDOWN-HEAD
+
+
+
+
+/BLOGDOWN-HEAD -->
